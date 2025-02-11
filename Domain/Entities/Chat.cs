@@ -1,7 +1,6 @@
 using SharedKernel.Interfaces;
-using Domain.Interfaces;
 
-namespace Domain.Models;
+namespace Domain.Entities;
 
 public class Chat(Guid chatId) : IAggregateRoot
 {

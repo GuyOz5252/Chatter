@@ -1,5 +1,5 @@
 using SharedKernel.Interfaces;
 
-namespace Application.User.AddFriend;
+namespace Application.Users.Commands.AddFriend;
 
 public record AddFriendCommand(Guid UserId, Guid FriendToAddId) : ICommand;

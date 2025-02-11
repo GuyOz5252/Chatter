@@ -1,5 +1,5 @@
+using Domain.Entities;
 using SharedKernel.Specifications;
-using Domain.Models;
 
 namespace Domain.Specifications;
 

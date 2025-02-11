@@ -3,7 +3,7 @@ using Domain.Specifications;
 using SharedKernel.Interfaces;
 using SharedKernel.Results;
 
-namespace Application.User.AddFriend;
+namespace Application.Users.Commands.AddFriend;
 
 public class AddFriendCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork) : ICommandHandler<AddFriendCommand>
 {

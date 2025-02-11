@@ -1,4 +1,4 @@
-using Application.User.GetById;
+using Application.Users.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

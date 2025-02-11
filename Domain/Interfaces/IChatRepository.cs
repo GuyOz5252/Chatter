@@ -1,5 +1,5 @@
+using Domain.Entities;
 using SharedKernel.Interfaces;
-using Domain.Models;
 
 namespace Domain.Interfaces;
 

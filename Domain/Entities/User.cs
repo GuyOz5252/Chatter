@@ -1,16 +1,17 @@
 using SharedKernel.Interfaces;
-using Domain.Interfaces;
 using SharedKernel.Results;
 
-namespace Domain.Models;
+namespace Domain.Entities;
 
-public class User(Guid userId, string userName) : IAggregateRoot
+public class User(Guid userId, string userName, string email) : IAggregateRoot
 {
     private readonly List<User> _friends = [];
     
     public Guid UserId { get; init; } = userId;
     
     public string UserName { get; private set; } = userName;
+
+    public string Email { get; private set; } = email;
     
     public IReadOnlyCollection<User> Friends => _friends.AsReadOnly();
 

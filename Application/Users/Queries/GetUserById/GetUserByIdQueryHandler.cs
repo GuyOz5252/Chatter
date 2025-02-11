@@ -3,14 +3,14 @@ using Domain.Specifications;
 using SharedKernel.Interfaces;
 using SharedKernel.Results;
 
-namespace Application.User.GetById;
+namespace Application.Users.Queries.GetUserById;
 
 public class GetUserByIdQueryHandler(IUserRepository userRepository)
-    : IQueryHandler<GetUserByIdQuery, Domain.Models.User>
+    : IQueryHandler<GetUserByIdQuery, Domain.Entities.User>
 {
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<Result<Domain.Models.User>> HandleAsync(GetUserByIdQuery query, CancellationToken cancellationToken = default)
+    public async Task<Result<Domain.Entities.User>> HandleAsync(GetUserByIdQuery query, CancellationToken cancellationToken = default)
     {
         var userResult = await _userRepository.GetBySpecificationAsync(new UserByIdSpecification(query.UserId), cancellationToken);
         if (userResult.IsFailure)
