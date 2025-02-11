@@ -1,5 +1,6 @@
 using SharedKernel.Interfaces;
 using Domain.Interfaces;
+using SharedKernel.Results;
 
 namespace Domain.Models;
 
@@ -13,23 +14,27 @@ public class User(Guid userId, string userName) : IAggregateRoot
     
     public IReadOnlyCollection<User> Friends => _friends.AsReadOnly();
 
-    public void AddFriend(User friend)
+    public Result AddFriend(User friend)
     {
         if (_friends.Contains(friend))
         {
-            return;
+            return Error.Conflict(nameof(friend));
         }
         
         _friends.Add(friend);
+        
+        return Result.Success();
     }
 
-    public void RemoveFriend(User friend)
+    public Result RemoveFriend(User friend)
     {
         if (!_friends.Contains(friend))
         {
-            return;
+            return Error.NotFound(nameof(friend));
         }
         
         _friends.Remove(friend);
+        
+        return Result.Success();
     }
 }

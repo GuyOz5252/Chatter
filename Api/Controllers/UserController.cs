@@ -1,18 +1,18 @@
-using Domain.Interfaces;
-using Domain.Specifications;
+using Application.User.GetById;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
 [ApiController]
-public class UserController(IUserRepository userRepository) : ControllerBase
+public class UserController(IMediator mediator) : ControllerBase
 {
-    private readonly IUserRepository _userRepository = userRepository;
-
+    private readonly IMediator _mediator = mediator;
+    
     [HttpGet("users/{userId:guid}")]
     public async Task<IActionResult> GetById(Guid userId)
     {
-        var result = await _userRepository.GetBySpecificationAsync(new UserByIdSpecification(userId));
-        return result.Match<IActionResult>(Ok, NotFound);
+        var userResult = await _mediator.Send(new GetUserByIdQuery(userId));
+        return userResult.Match<IActionResult>(Ok, BadRequest);
     }
 }

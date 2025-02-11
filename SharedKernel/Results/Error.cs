@@ -5,4 +5,7 @@ public record Error(ErrorType ErrorType, string Message)
     // TODO: Test what happens if string format doesnt have a format
     public static Error NotFound(string nameof, string message = "{0} not found") =>
         new(ErrorType.NotFound, string.Format(message, nameof));
+
+    public static Error Conflict(string nameof, string message = "conflict: {0} already exists") => 
+        new(ErrorType.Conflict, string.Format(message, nameof));
 }
