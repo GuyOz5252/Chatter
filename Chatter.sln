@@ -1,14 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{941D6F2D-0935-40CE-9326-A720953139B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Domain", "Chatter.Domain\Chatter.Domain.csproj", "{941D6F2D-0935-40CE-9326-A720953139B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{97B84360-A6B8-4893-BCC5-D55573184A27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Application", "Chatter.Application\Chatter.Application.csproj", "{97B84360-A6B8-4893-BCC5-D55573184A27}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{EB24FD8B-2B41-4BD0-826E-24EE32586388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{9A92AB71-8AE6-4DA4-BF78-DF8A322D05D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Api", "Chatter.Api\Chatter.Api.csproj", "{9A92AB71-8AE6-4DA4-BF78-DF8A322D05D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A44F466A-68D8-4833-BB5E-5E552C7D2965}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Infrastructure", "Chatter.Infrastructure\Chatter.Infrastructure.csproj", "{A44F466A-68D8-4833-BB5E-5E552C7D2965}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatter.Client", "Chatter.Client\Chatter.Client.csproj", "{C832051D-B126-439C-8EE9-BB86035EAEDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{EC36BF1F-6C8F-47C0-A5D6-DBCD88B269A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +40,12 @@ Global
 		{A44F466A-68D8-4833-BB5E-5E552C7D2965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A44F466A-68D8-4833-BB5E-5E552C7D2965}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A44F466A-68D8-4833-BB5E-5E552C7D2965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C832051D-B126-439C-8EE9-BB86035EAEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C832051D-B126-439C-8EE9-BB86035EAEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C832051D-B126-439C-8EE9-BB86035EAEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C832051D-B126-439C-8EE9-BB86035EAEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C832051D-B126-439C-8EE9-BB86035EAEDB} = {EC36BF1F-6C8F-47C0-A5D6-DBCD88B269A6}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,5 @@
+using SharedKernel.Interfaces;
+
+namespace Chatter.Application.Users.Commands.AddFriend;
+
+public record AddFriendCommand(Guid UserId, Guid FriendToAddId) : ICommand;
