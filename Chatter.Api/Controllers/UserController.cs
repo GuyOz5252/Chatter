@@ -1,3 +1,4 @@
+using Chatter.Api.Extensions;
 using Chatter.Application.Users.Queries.GetUserById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,6 @@ public class UserController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetById(Guid userId)
     {
         var userResult = await _mediator.Send(new GetUserByIdQuery(userId));
-        return userResult.Match<IActionResult>(Ok, BadRequest);
+        return userResult.Match<IActionResult>(Ok, error => error.ToProblemDetails());
     }
 }

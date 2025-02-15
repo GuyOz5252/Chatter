@@ -10,7 +10,7 @@ public class Chat(Guid chatId) : IAggregateRoot
     
     public Guid ChatId { get; init; } = chatId;
 
-    public IReadOnlyCollection<User> UserIds => _participants.AsReadOnly(); 
+    public IReadOnlyCollection<User> Participants => _participants.AsReadOnly(); 
 
     public IReadOnlyCollection<ChatMessage> ChatMessages => _chatMessages.AsReadOnly();
 
