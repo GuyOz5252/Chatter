@@ -12,9 +12,6 @@ public class ListUsersQueryHandler(IUserRepository userRepository)
 
     public async Task<Result<List<User>>> HandleAsync(ListUsersQuery query, CancellationToken token = default)
     {
-        var usersResult = await _userRepository.ListAsync(token);
-        return usersResult.Match<List<User>>(
-            value => value,
-            error => Result<List<User>>.Failure(error));
+        return await _userRepository.ListAsync(token);
     }
 }

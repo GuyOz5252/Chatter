@@ -12,12 +12,6 @@ public class GetUserByIdQueryHandler(IUserRepository userRepository)
 
     public async Task<Result<Domain.Entities.User>> HandleAsync(GetUserByIdQuery query, CancellationToken cancellationToken = default)
     {
-        var userResult = await _userRepository.GetBySpecificationAsync(new UserByIdSpecification(query.UserId), cancellationToken);
-        if (userResult.IsFailure)
-        {
-            return userResult.Error;
-        }
-        
-        return userResult.Value;
+        return await _userRepository.GetBySpecificationAsync(new UserByIdSpecification(query.UserId), cancellationToken);
     }
 }

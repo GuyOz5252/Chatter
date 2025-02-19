@@ -3,7 +3,7 @@ using Chatter.Domain.Specifications;
 using SharedKernel.Interfaces;
 using SharedKernel.Results;
 
-namespace Chatter.Application.Chat.Commands.SendChatMessage;
+namespace Chatter.Application.Chats.Commands.SendChatMessage;
 
 public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUserRepository userRepository)
     : ICommandHandler<SendChatMessageCommand>
