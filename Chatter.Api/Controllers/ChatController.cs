@@ -8,11 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Chatter.Api.Controllers;
 
 [ApiController]
+[Route("chats")]
 public class ChatController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
 
-    [HttpPost("chats/{chatId:Guid}/send-message")]
+    [HttpPost("{chatId:Guid}/send-message")]
     public async Task<IActionResult> SendMessage([FromRoute] Guid chatId, [FromBody] ChatMessageDto chatMessageDto)
     {
         var result =
@@ -20,8 +21,8 @@ public class ChatController(IMediator mediator) : ControllerBase
         return result.Match<IActionResult>(Ok, error => error.ToProblemDetails());
     }
 
-    [HttpGet($"chats?{nameof(userId)}={{userId:Guid}}")]
-    public async Task<IActionResult> GetChatsByUser([FromRoute] Guid userId)
+    [HttpGet]
+    public async Task<IActionResult> GetChatsByUser([FromQuery] Guid userId)
     {
         var result = await _mediator.Send(new GetChatsByUserQuery(userId));
         return result.Match<IActionResult>(Ok, error => error.ToProblemDetails());

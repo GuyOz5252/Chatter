@@ -1,6 +1,4 @@
 using Chatter.Api.Middlewares;
-using Chatter.Domain.Interfaces;
-using Chatter.Domain.Services;
 using Microsoft.OpenApi.Models;
 
 namespace Chatter.Api;
@@ -9,8 +7,6 @@ public class Startup(IConfiguration configuration)
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
-
         services.AddProblemDetails();
         services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
         services.AddControllers();
