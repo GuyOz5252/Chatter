@@ -12,19 +12,19 @@ public interface IRepository<T> where T : class, IAggregateRoot
     
     Task<Result<T>> AddAsync(T entity, CancellationToken cancellationToken = default);
     
-    Task<Result<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    Task<Result<IEnumerable<T>>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
     
-    Task<Result> UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    Task<Result<T>> UpdateAsync(T entity, CancellationToken cancellationToken = default);
     
     Task<Result> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
     
-    Task<Result> DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    Task<Result<T>> DeleteAsync(T entity, CancellationToken cancellationToken = default);
     
     Task<Result> DeleteRangeAsync(IEnumerable<T> specification, CancellationToken cancellationToken = default);
     
     Task<Result> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
     
-    Task<Result<T>> CountAsync(CancellationToken cancellationToken = default);
+    Task<Result<int>> CountAsync(CancellationToken cancellationToken = default);
     
-    Task<Result<T>> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
+    Task<Result<int>> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
 }
