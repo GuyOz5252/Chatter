@@ -10,7 +10,7 @@ public class ListUsersQueryHandler(IUserRepository userRepository)
 {
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<Result<List<User>>> HandleAsync(ListUsersQuery query, CancellationToken token = default)
+    public async Task<Result<List<User>>> Handle(ListUsersQuery query, CancellationToken token = default)
     {
         return await _userRepository.ListAsync(token);
     }

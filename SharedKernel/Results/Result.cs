@@ -28,7 +28,12 @@ public sealed class Result<T> : Result
     
     public static implicit operator T(Result<T> result) => result.Value;
     
-    public static implicit operator Result<T>(T value) => new(value);
+    // public static implicit operator Result<T>(T value) => new(value);
     
+    public static implicit operator Result<T>(T value)
+    {
+        return value is null ? Failure(Error.NotFound(typeof(T).Name)) : Success(value);
+    }
+
     public static implicit operator Result<T>(Error error) => Failure(error);
 }

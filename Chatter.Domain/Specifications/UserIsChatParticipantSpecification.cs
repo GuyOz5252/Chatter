@@ -7,9 +7,9 @@ public class UserIsChatParticipantSpecification : SpecificationBase<Chat>
 { 
     public UserIsChatParticipantSpecification(Guid chatId, Guid userId)
     {
-        Query = Query
-            .Where(chat => chat.ChatId.Equals(chatId))
-            .Where(chat => chat.Participants
-                .Any(participant => participant.UserId.Equals(userId)));
+        Query = chat =>
+            chat.ChatId.Equals(chatId)
+            && chat.Participants
+                .Any(participant => participant.UserId.Equals(userId));
     }
 }

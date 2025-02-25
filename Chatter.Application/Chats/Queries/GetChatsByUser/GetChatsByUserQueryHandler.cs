@@ -15,7 +15,7 @@ public class GetChatsByUserQueryHandler : IQueryHandler<GetChatsByUserQuery, Lis
         _chatRepository = chatRepository;
     }
 
-    public async Task<Result<List<Chat>>> HandleAsync(GetChatsByUserQuery query, CancellationToken token = default)
+    public async Task<Result<List<Chat>>> Handle(GetChatsByUserQuery query, CancellationToken token = default)
     {
         return await _chatRepository.ListAsync(new ChatsByUserSpecification(query.UserId), token);
     }

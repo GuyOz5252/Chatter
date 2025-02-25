@@ -1,12 +1,38 @@
 using Chatter.Api.Middlewares;
+using Chatter.Domain.Interfaces;
+using Chatter.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SharedKernel.Interfaces;
 
 namespace Chatter.Api;
 
-public class Startup(IConfiguration configuration)
+public class Startup
 {
+    private readonly IConfiguration _configuration;
+
+    public Startup(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("Chatter"));
+        
+        // services.Scan(selector =>
+        //     selector.FromApplicationDependencies()
+        //         .AddClasses(false)
+        //         .AsImplementedInterfaces()
+        //         .WithScopedLifetime());
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
+        services.AddMediatR(config => 
+            config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly));
+        
         services.AddProblemDetails();
         services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
         services.AddControllers();

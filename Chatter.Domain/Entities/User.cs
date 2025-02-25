@@ -5,7 +5,7 @@ namespace Chatter.Domain.Entities;
 
 public class User(Guid userId, string userName, string email) : IAggregateRoot
 {
-    private readonly List<User> _friends = [];
+    private readonly List<Guid> _friendsIds = [];
     
     public Guid UserId { get; init; } = userId;
     
@@ -13,28 +13,28 @@ public class User(Guid userId, string userName, string email) : IAggregateRoot
 
     public string Email { get; private set; } = email;
     
-    public IReadOnlyCollection<User> Friends => _friends.AsReadOnly();
+    public IReadOnlyCollection<Guid> FriendsIds => _friendsIds.AsReadOnly();
 
     public Result AddFriend(User friend)
     {
-        if (_friends.Contains(friend))
+        if (_friendsIds.Contains(friend.UserId))
         {
             return Error.Conflict(nameof(friend));
         }
         
-        _friends.Add(friend);
+        _friendsIds.Add(friend.UserId);
         
         return Result.Success();
     }
 
     public Result RemoveFriend(User friend)
     {
-        if (!_friends.Contains(friend))
+        if (!_friendsIds.Contains(friend.UserId))
         {
             return Error.NotFound(nameof(friend));
         }
         
-        _friends.Remove(friend);
+        _friendsIds.Remove(friend.UserId);
         
         return Result.Success();
     }

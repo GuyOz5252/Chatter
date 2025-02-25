@@ -10,7 +10,7 @@ public class CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWor
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    public async Task<Result<Guid>> HandleAsync(CreateUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<Result<Guid>> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
     {
         var user = new Domain.Entities.User(Guid.NewGuid(), command.Username, command.Email);
         var userResult = await _userRepository.AddAsync(user, cancellationToken);

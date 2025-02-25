@@ -6,7 +6,7 @@ namespace Chatter.Infrastructure;
 
 public class ChatRepository : EntityFrameworkRepositoryBase<Chat>, IChatRepository
 {
-    public ChatRepository(DbContext dbContext) : base(dbContext)
+    public ChatRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
     }
 }

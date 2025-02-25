@@ -15,7 +15,7 @@ public abstract class EntityFrameworkRepositoryBase<T> : IRepository<T> where T 
 
     public async Task<Result<T>> GetBySpecificationAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().AsQueryable().Concat(specification.Query).SingleAsync(cancellationToken);
+        return (await _dbContext.Set<T>().FirstOrDefaultAsync(specification.Query, cancellationToken))!;
     }
 
     public async Task<Result<List<T>>> ListAsync(CancellationToken cancellationToken = default)
@@ -25,7 +25,7 @@ public abstract class EntityFrameworkRepositoryBase<T> : IRepository<T> where T 
 
     public async Task<Result<List<T>>> ListAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().Concat(specification.Query).ToListAsync(cancellationToken);
+        return await _dbContext.Set<T>().Where(specification.Query).ToListAsync(cancellationToken);
     }
 
     public async Task<Result<T>> AddAsync(T entity, CancellationToken cancellationToken = default)
@@ -67,7 +67,7 @@ public abstract class EntityFrameworkRepositoryBase<T> : IRepository<T> where T 
 
     public Task<Result> DeleteRangeAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        var entitiesToDelete = _dbContext.Set<T>().AsQueryable().Concat(specification.Query);
+        var entitiesToDelete = _dbContext.Set<T>().Where(specification.Query);
         _dbContext.RemoveRange(entitiesToDelete);
         return Task.FromResult(Result.Success());
     }
@@ -79,6 +79,6 @@ public abstract class EntityFrameworkRepositoryBase<T> : IRepository<T> where T 
 
     public async Task<Result<int>> CountAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.Set<T>().Concat(specification.Query).CountAsync(cancellationToken);
+        return await _dbContext.Set<T>().Where(specification.Query).AsQueryable().CountAsync(cancellationToken);
     }
 }

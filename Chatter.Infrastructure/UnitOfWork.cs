@@ -6,9 +6,9 @@ namespace Chatter.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly DbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
 
-    public UnitOfWork(DbContext dbContext)
+    public UnitOfWork(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

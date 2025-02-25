@@ -7,8 +7,8 @@ public class ChatsByUserSpecification : SpecificationBase<Chat>
 {
     public ChatsByUserSpecification(Guid userId)
     {
-        Query = Query
-            .Where(chat => chat.Participants
-                .Any(participant => participant.UserId.Equals(userId)));
+        Query = chat =>
+            chat.Participants
+                .Any(participant => participant.UserId.Equals(userId));
     }
 }

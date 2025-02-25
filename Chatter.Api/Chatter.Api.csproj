@@ -10,6 +10,8 @@
     <ItemGroup>
         <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
+        <PackageReference Include="Scrutor" Version="6.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
@@ -18,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Chatter.Application\Chatter.Application.csproj" />
       <ProjectReference Include="..\Chatter.Domain\Chatter.Domain.csproj" />
+      <ProjectReference Include="..\Chatter.Infrastructure\Chatter.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

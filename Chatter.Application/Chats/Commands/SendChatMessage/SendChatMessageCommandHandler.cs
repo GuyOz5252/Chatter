@@ -11,7 +11,7 @@ public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUser
     private readonly IChatRepository _chatRepository = chatRepository;
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<Result> HandleAsync(SendChatMessageCommand command, CancellationToken cancellationToken = default)
+    public async Task<Result> Handle(SendChatMessageCommand command, CancellationToken cancellationToken = default)
     {
         var chatResult = await _chatRepository
             .GetBySpecificationAsync(new ChatByIdSpecification(command.ChatId), cancellationToken);
