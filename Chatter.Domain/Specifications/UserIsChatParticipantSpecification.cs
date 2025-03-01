@@ -10,6 +10,6 @@ public class UserIsChatParticipantSpecification : SpecificationBase<Chat>
         Query = chat =>
             chat.ChatId.Equals(chatId)
             && chat.Participants
-                .Any(participant => participant.UserId.Equals(userId));
+                .Any(participant => participant.Id.Equals(userId));
     }
 }

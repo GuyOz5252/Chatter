@@ -20,6 +20,6 @@ public class CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWor
         }
         
         await _unitOfWork.CommitAsync(cancellationToken);
-        return userResult.Value.UserId;
+        return userResult.Value.Id;
     }
 }
