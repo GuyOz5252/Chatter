@@ -19,12 +19,6 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("Chatter"));
-        
-        // services.Scan(selector =>
-        //     selector.FromApplicationDependencies()
-        //         .AddClasses(false)
-        //         .AsImplementedInterfaces()
-        //         .WithScopedLifetime());
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IChatRepository, ChatRepository>();

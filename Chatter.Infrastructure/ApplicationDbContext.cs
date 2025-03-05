@@ -15,7 +15,33 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        modelBuilder.Entity<Chat>()
+            .HasMany(c => c.Participants)
+            .WithMany();
+        
+        modelBuilder.Entity<Chat>()
+            .HasMany(chat => chat.ChatMessages)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ChatMessage>()
+            .HasOne(chatMessage => chatMessage.Sender)
+            .WithMany()
+            .HasForeignKey("SenderId");
+        
+        modelBuilder.Entity<UserFriendship>()
+            .HasKey(userFriendship => new { userFriendship.UserId, userFriendship.FriendId });
+
+        modelBuilder.Entity<UserFriendship>()
+            .HasOne(userFriendship => userFriendship.User)
+            .WithMany(user => user.Friendships)
+            .HasForeignKey(userFriendship => userFriendship.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<UserFriendship>()
+            .HasOne(userFriendship => userFriendship.Friend)
+            .WithMany()
+            .HasForeignKey(userFriendship => userFriendship.FriendId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

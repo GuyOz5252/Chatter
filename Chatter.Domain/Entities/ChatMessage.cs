@@ -2,21 +2,21 @@ namespace Chatter.Domain.Entities;
 
 public class ChatMessage
 {
-    public Guid ChatMessageId { get; init; }
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public DateTime CreatedAt { get; init; } =  DateTime.UtcNow;
+    // public Guid SenderId { get; init; }
     public User Sender { get; init; }
-    public DateTime Timestamp { get; init; }
-    public string MessageContent { get; init; }
+    public string MessageContent { get; private set; }
 
-    public ChatMessage(Guid chatMessageId, User sender, DateTime timestamp, string messageContent)
-    {
-        ChatMessageId = chatMessageId;
-        Sender = sender;
-        Timestamp = timestamp;
-        MessageContent = messageContent;
-    }
-
+#pragma warning disable CS8618
     public ChatMessage()
     {
-        // EF Core
+    }
+#pragma warning restore CS8618
+    
+    public ChatMessage(User sender, string messageContent)
+    {
+        Sender = sender;
+        MessageContent = messageContent;
     }
 }

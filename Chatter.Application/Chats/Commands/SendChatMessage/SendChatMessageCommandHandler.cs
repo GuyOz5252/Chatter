@@ -29,7 +29,7 @@ public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUser
         }
         var user = userResult.Value;
         
-        var specification = new UserIsChatParticipantSpecification(chat.ChatId, user.Id);
+        var specification = new UserIsChatParticipantSpecification(chat.Id, user.Id);
         if (!specification.Apply(chat))
         {
             return Result.Failure(Error.Forbidden("User is not in chat"));

@@ -7,6 +7,6 @@ public class ChatByIdSpecification : SpecificationBase<Chat>
 {
     public ChatByIdSpecification(Guid chatId)
     {
-        Query = chat => chat.ChatId.Equals(chatId);
+        Query = chat => chat.Id.Equals(chatId);
     }
 }

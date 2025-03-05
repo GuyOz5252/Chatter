@@ -3,18 +3,21 @@ using SharedKernel.Results;
 
 namespace Chatter.Domain.Entities;
 
-public class User(Guid id, string userName, string email) : IAggregateRoot
+public class User : IAggregateRoot
 {
     private readonly List<UserFriendship> _friendships = [];
     
-    public Guid Id { get; init; } = id;
-    
-    public string UserName { get; private set; } = userName;
-
-    public string Email { get; private set; } = email;
-    
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public string UserName { get; private set; }
+    public string Email { get; private set; }
     public IReadOnlyList<UserFriendship> Friendships => _friendships.AsReadOnly();
 
+    public User(string userName, string email)
+    {
+        UserName = userName;
+        Email = email;
+    }
+    
     public Result AddFriend(User friend)
     {
         if (_friendships.Any(userFriendship => userFriendship.FriendId.Equals(friend.Id)))

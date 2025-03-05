@@ -1,3 +1,4 @@
+using Chatter.Domain.Entities;
 using Chatter.Domain.Interfaces;
 using SharedKernel.Interfaces;
 using SharedKernel.Results;
@@ -12,7 +13,7 @@ public class CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWor
 
     public async Task<Result<Guid>> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
     {
-        var user = new Domain.Entities.User(Guid.NewGuid(), command.Username, command.Email);
+        var user = new User(command.Username, command.Email);
         var userResult = await _userRepository.AddAsync(user, cancellationToken);
         if (userResult.IsFailure)
         {
