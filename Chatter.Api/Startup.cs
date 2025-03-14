@@ -1,4 +1,5 @@
 using Chatter.Api.Middlewares;
+using Chatter.Domain.Entities;
 using Chatter.Domain.Interfaces;
 using Chatter.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,20 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("Chatter"));
+        // services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("Chatter"));
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseNpgsql(
+                _configuration.GetConnectionString("ChatterDb"),
+                optionsBuilder => optionsBuilder.MigrationsAssembly("Chatter.Api"));
+            options.UseSeeding((dbContext, _) =>
+            {
+                // TODO: fix
+                dbContext.Set<User>().AddRange(
+                    new User("626guyo", "Password1")
+                );
+            });
+        });
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IChatRepository, ChatRepository>();
