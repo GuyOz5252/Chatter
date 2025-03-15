@@ -1,3 +1,8 @@
 namespace Chatter.Api.Dtos;
 
-public record CreateUserDto(string Username, string Email);
+public record CreateUserDto 
+{
+    public required string Username { get; init; }
+    
+    public required string Email { get; init; }
+}

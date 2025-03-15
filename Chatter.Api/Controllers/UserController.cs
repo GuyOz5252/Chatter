@@ -11,9 +11,14 @@ namespace Chatter.Api.Controllers;
 
 [ApiController]
 [Route("users")]
-public class UserController(IMediator mediator) : ControllerBase
+public class UserController : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
+
+    public UserController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
     
     [HttpGet("{userId:guid}")]
     public async Task<IActionResult> GetById(Guid userId)
@@ -21,7 +26,7 @@ public class UserController(IMediator mediator) : ControllerBase
         var userResult = await _mediator.Send(new GetUserByIdQuery(userId));
         return userResult.Match<IActionResult>(value =>
         {
-            var userWithFriendsDto = new UserWithFriendsDto
+            var userWithFriendsDto = new FullUserDto
             {
                 Id = value.Id,
                 UserName = value.UserName,
@@ -29,7 +34,7 @@ public class UserController(IMediator mediator) : ControllerBase
                 Friends = value.Friendships.Select(userFriendship => new UserDto
                 {
                     Id = userFriendship.Friend.Id,
-                    Username = userFriendship.Friend.UserName,
+                    UserName = userFriendship.Friend.UserName,
                     Email = userFriendship.Friend.Email
                 }).ToList()
             };
