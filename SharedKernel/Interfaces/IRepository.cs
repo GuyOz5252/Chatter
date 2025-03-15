@@ -4,6 +4,8 @@ namespace SharedKernel.Interfaces;
 
 public interface IRepository<T> where T : class, IAggregateRoot
 {
+    Task<Result<T>> GetByPk(object pk, CancellationToken cancellationToken = default);
+    
     Task<Result<T>> GetBySpecificationAsync(ISpecification<T> specification, CancellationToken cancellationToken = default);
     
     Task<Result<List<T>>> ListAsync(CancellationToken cancellationToken = default);

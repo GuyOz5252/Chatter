@@ -3,9 +3,13 @@ namespace Chatter.Domain.Entities;
 public class UserFriendship
 {
     public Guid UserId { get; init; }
+    
     public User User { get; init; }
+    
     public Guid FriendId { get; init; }
+    
     public User Friend { get; init; }
+    
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
     
 #pragma warning disable CS8618

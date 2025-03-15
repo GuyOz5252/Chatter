@@ -17,6 +17,7 @@ public class UserRepository : EntityFrameworkRepositoryBase<User>, IUserReposito
         return (await DbContext.Set<User>()
             .Where(specification.Query)
             .Include(user => user.Friendships)
+            .ThenInclude(userFriendship => userFriendship.Friend)
             .FirstOrDefaultAsync(cancellationToken))!;
     }
 

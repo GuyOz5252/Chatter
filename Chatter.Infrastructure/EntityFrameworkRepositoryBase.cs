@@ -13,6 +13,11 @@ public abstract class EntityFrameworkRepositoryBase<T> : IRepository<T> where T 
         DbContext = dbContext;
     }
 
+    public async Task<Result<T>> GetByPk(object pk, CancellationToken cancellationToken = default)
+    {
+        return (await DbContext.Set<T>().FindAsync([pk], cancellationToken: cancellationToken))!;
+    }
+
     public virtual async Task<Result<T>> GetBySpecificationAsync(ISpecification<T> specification, CancellationToken cancellationToken = default)
     {
         return (await DbContext.Set<T>().FirstOrDefaultAsync(specification.Query, cancellationToken))!;
