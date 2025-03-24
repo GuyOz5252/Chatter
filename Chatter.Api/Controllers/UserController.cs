@@ -1,9 +1,7 @@
 using Chatter.Api.Dtos;
 using Chatter.Api.Extensions;
-using Chatter.Application.Users.Commands.AddFriend;
 using Chatter.Application.Users.Commands.CreateUser;
 using Chatter.Application.Users.Queries.GetUserById;
-using Chatter.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,19 +24,13 @@ public class UserController : ControllerBase
         var userResult = await _mediator.Send(new GetUserByIdQuery(userId));
         return userResult.Match<IActionResult>(value =>
         {
-            var userWithFriendsDto = new FullUserDto
+            var userDto = new UserDto
             {
                 Id = value.Id,
                 UserName = value.UserName,
-                Email = value.Email,
-                Friends = value.Friendships.Select(userFriendship => new UserDto
-                {
-                    Id = userFriendship.Friend.Id,
-                    UserName = userFriendship.Friend.UserName,
-                    Email = userFriendship.Friend.Email
-                }).ToList()
+                Email = value.Email
             };
-            return Ok(userWithFriendsDto);
+            return Ok(userDto);
         }, error => error.ToProblemDetails());
     }
 
@@ -49,12 +41,5 @@ public class UserController : ControllerBase
         return result.Match<IActionResult>(
             value => Ok(value),
             error => error.ToProblemDetails());
-    }
-
-    [HttpPost("{userId:guid}")]
-    public async Task<IActionResult> AddFriend(Guid userId, [FromQuery] Guid friendId)
-    {
-        var result = await _mediator.Send(new AddFriendCommand(userId, friendId));
-        return result.Match<IActionResult>(Ok, error => error.ToProblemDetails());
     }
 }

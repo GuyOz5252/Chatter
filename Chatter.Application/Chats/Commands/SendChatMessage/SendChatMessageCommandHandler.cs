@@ -5,11 +5,12 @@ using SharedKernel.Results;
 
 namespace Chatter.Application.Chats.Commands.SendChatMessage;
 
-public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUserRepository userRepository)
+public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
     : ICommandHandler<SendChatMessageCommand>
 {
     private readonly IChatRepository _chatRepository = chatRepository;
     private readonly IUserRepository _userRepository = userRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Result> Handle(SendChatMessageCommand command, CancellationToken cancellationToken = default)
     {
@@ -37,6 +38,9 @@ public class SendChatMessageCommandHandler(IChatRepository chatRepository, IUser
         
         chat.AddMessage(user, command.ChatMessageContent);
         
-        return Result.Success();
+        var updateResult = await _chatRepository.UpdateAsync(chat, cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
+
+        return updateResult.IsFailure ? updateResult : Result.Success();
     }
 }

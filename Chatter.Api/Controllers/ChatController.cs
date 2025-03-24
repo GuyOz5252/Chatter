@@ -1,5 +1,6 @@
 using Chatter.Api.Dtos;
 using Chatter.Api.Extensions;
+using Chatter.Application.Chats.Commands.CreateChat;
 using Chatter.Application.Chats.Commands.SendChatMessage;
 using Chatter.Application.Chats.Queries.GetChatsByUser;
 using MediatR;
@@ -9,10 +10,24 @@ namespace Chatter.Api.Controllers;
 
 [ApiController]
 [Route("chats")]
-public class ChatController(IMediator mediator) : ControllerBase
+public class ChatController : ControllerBase
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
 
+    public ChatController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateChat(CreateChatDto createChatDto)
+    {
+        var result = await _mediator.Send(new CreateChatCommand(createChatDto.ParticipantIds));
+        return result.Match<IActionResult>(
+            value => Ok(value),
+            error => error.ToProblemDetails());
+    }
+    
     [HttpPost("{chatId:Guid}/send-message")]
     public async Task<IActionResult> SendMessage([FromRoute] Guid chatId, [FromBody] ChatMessageDto chatMessageDto)
     {
@@ -20,7 +35,7 @@ public class ChatController(IMediator mediator) : ControllerBase
             await _mediator.Send(new SendChatMessageCommand(chatId, chatMessageDto.UserId, chatMessageDto.ChatMessageContent));
         return result.Match<IActionResult>(Ok, error => error.ToProblemDetails());
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> GetChatsByUser([FromQuery] Guid userId)
     {
