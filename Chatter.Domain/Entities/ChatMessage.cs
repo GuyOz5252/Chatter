@@ -6,8 +6,6 @@ public class ChatMessage
     
     public DateTime CreatedAt { get; init; } =  DateTime.UtcNow;
     
-    // public Guid SenderId { get; init; }
-    
     public User Sender { get; init; }
     
     public string MessageContent { get; private set; }

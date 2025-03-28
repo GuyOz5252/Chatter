@@ -11,18 +11,4 @@ public class UserRepository : EntityFrameworkRepositoryBase<User>, IUserReposito
     public UserRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
     }
-
-    public override async Task<Result<User>> GetBySpecificationAsync(ISpecification<User> specification, CancellationToken cancellationToken = default)
-    {
-        return (await DbContext.Set<User>()
-            .Where(specification.Query)
-            .Include(user => user.Friendships)
-            .ThenInclude(userFriendship => userFriendship.Friend)
-            .FirstOrDefaultAsync(cancellationToken))!;
-    }
-
-    // public async Task<Result<User>> GetById(Guid userId)
-    // {
-    //     return (await DbContext.Set<User>().Where(user => user.UserId.Equals(userId)).FirstOrDefaultAsync())!;
-    // }
 }
