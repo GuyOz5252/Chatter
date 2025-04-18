@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chatter.Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Chatter" Height="450" Width="800">
     <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition />
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock
+            Grid.Column="0"
+            FontWeight="Bold"
+            FontSize="30"
+            Margin="5">
+            Chatter
+        </TextBlock>
+        
+        <ListBox
+            x:Name="ChatMessageList"
+            Grid.Column="1"
+            Grid.Row="1">
+        </ListBox>
+        
+        <Grid Grid.Row="2" Grid.Column="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <TextBox 
+                x:Name="MessageBox"
+                Grid.Column="0"
+                Margin="5"/>
+            <Button 
+                Content="Send"
+                Grid.Column="1"
+                Click="SendMessage_Click"
+                Margin="5"/>
+        </Grid>
     </Grid>
 </Window>

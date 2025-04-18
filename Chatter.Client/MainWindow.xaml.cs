@@ -1,23 +1,34 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Chatter.Client.Models;
 
 namespace Chatter.Client;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
+    private readonly ObservableCollection<ChatMessage> _messages = [];
+    
+    private readonly User _user;
+    
     public MainWindow()
     {
         InitializeComponent();
+        ChatMessageList.ItemsSource = _messages;
+        _user = new User
+        {
+            Id = Guid.Parse("fb1f803e-fb73-4cd8-a3ca-d6e63e3cb48a"),
+            UserName = "guy"
+        };
+    }
+
+    private void SendMessage_Click(object sender, RoutedEventArgs e)
+    {
+        _messages.Add(new ChatMessage
+        {
+            Sender = _user.UserName,
+            MessageContent = MessageBox.Text,
+            SentAt = DateTime.UtcNow
+        });
+        MessageBox.Clear();
     }
 }
