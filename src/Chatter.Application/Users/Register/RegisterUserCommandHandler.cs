@@ -1,7 +1,8 @@
-using Chatter.Application.Abstract;
 using Chatter.Domain.Abstract;
 using Chatter.Domain.Entities;
 using SharedKernel;
+using SharedKernel.Messaging;
+using SharedKernel.Results;
 
 namespace Chatter.Application.Users.Register;
 
@@ -21,7 +22,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, G
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<Result<Guid>> HandleAsync(RegisterUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> HandleAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
     {
         var passwordHash = _passwordHasher.Hash(command.Password);
 

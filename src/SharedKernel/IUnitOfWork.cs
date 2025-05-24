@@ -1,6 +1,6 @@
-using SharedKernel;
+using SharedKernel.Results;
 
-namespace Chatter.Application.Abstract;
+namespace SharedKernel;
 
 public interface IUnitOfWork
 {

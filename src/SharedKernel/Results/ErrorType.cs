@@ -1,4 +1,4 @@
-namespace SharedKernel;
+namespace SharedKernel.Results;
 
 public enum ErrorType
 {
@@ -6,5 +6,6 @@ public enum ErrorType
     Validation,
     Problem,
     NotFound,
-    Conflict
+    Conflict,
+    Unauthorized
 }

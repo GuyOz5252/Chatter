@@ -1,4 +1,4 @@
-namespace SharedKernel;
+namespace SharedKernel.Messaging;
 
 public interface ICommand;
 

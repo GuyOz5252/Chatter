@@ -7,13 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Chats\Create\" />
-        <Folder Include="Chats\Delete\" />
-        <Folder Include="Chats\Get\" />
-        <Folder Include="Chats\SendChatMessage\" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Chatter.Domain\Chatter.Domain.csproj" />
         <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
     </ItemGroup>

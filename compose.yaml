@@ -1,0 +1,6 @@
+﻿services:
+  chatter.api:
+    image: chatter.api
+    build:
+      context: .
+      dockerfile: src/Chatter.Api/Dockerfile
