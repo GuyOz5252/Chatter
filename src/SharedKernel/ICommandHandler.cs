@@ -1,6 +1,4 @@
-using SharedKernel;
-
-namespace Chatter.Application.Abstract;
+namespace SharedKernel;
 
 public interface ICommandHandler<in TCommand> where TCommand : ICommand
 {

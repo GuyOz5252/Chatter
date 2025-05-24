@@ -1,4 +1,5 @@
 using Chatter.Application.Abstract;
+using Chatter.Domain.Abstract;
 using Chatter.Domain.Entities;
 using SharedKernel;
 

@@ -1,6 +1,6 @@
 using Chatter.Domain.Entities;
 
-namespace Chatter.Application.Abstract;
+namespace Chatter.Domain.Abstract;
 
 public interface IUserRepository
 {

@@ -1,4 +1,4 @@
-using Chatter.Application.Abstract;
+using SharedKernel;
 
 namespace Chatter.Application.Users.Register;
 

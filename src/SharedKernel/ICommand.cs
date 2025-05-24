@@ -1,4 +1,4 @@
-namespace Chatter.Application.Abstract;
+namespace SharedKernel;
 
 public interface ICommand;
 
