@@ -6,6 +6,9 @@ namespace Chatter.Infrastructure;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; init; }
-    
     public DbSet<Chat> Chats { get; init; }
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    {
+    }
 }

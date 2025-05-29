@@ -2,10 +2,12 @@ namespace SharedKernel.Results;
 
 public enum ErrorType
 {
+    BadRequest,
+    Unauthorized,
+    Forbidden,
+    NotFound,
+    Conflict,
     Failure,
     Validation,
     Problem,
-    NotFound,
-    Conflict,
-    Unauthorized
 }

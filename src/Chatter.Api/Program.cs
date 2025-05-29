@@ -1,4 +1,5 @@
 using System.Reflection;
+using Chatter.Api.Extensions;
 using Chatter.Api.Middlewares;
 using Chatter.Application.Chats.Create;
 using Chatter.Application.Chats.Get;
@@ -40,9 +41,12 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Chatter API" });
 });
 
+builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+
 var app = builder.Build();
 
-app.UseSwaggerUI();
+app.UseSwaggerUI(options => options.DocumentTitle = "Chatter API");
 app.UseExceptionHandler();
+app.MapEndpoints();
 
 await app.RunAsync();
