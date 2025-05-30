@@ -5,17 +5,21 @@ namespace Chatter.Domain.Entities;
 public class Chat : EntityBase, IAggregateRoot
 {
     private readonly List<ChatMessage> _chatMessages;
-    private readonly List<Guid> _participantsUserIds;
+    private readonly List<ChatParticipant> _participants;
     
-    public IReadOnlyCollection<ChatMessage> ChatMessages => _chatMessages;
-    public IReadOnlyCollection<Guid> ParticipantsUserIds => _participantsUserIds;
+    public List<ChatMessage> ChatMessages => _chatMessages;
+    public List<ChatParticipant> Participants => _participants;
 
     public Chat() {}
     
     public Chat(List<Guid> participantsUserIds)
     {
         Id = Guid.NewGuid();
-        _participantsUserIds = participantsUserIds;
+        _participants = participantsUserIds.Select(userId => new ChatParticipant
+        {
+            UserId = userId,
+            ChatId = Id
+        }).ToList();
         _chatMessages = [];
     }
 
@@ -26,6 +30,6 @@ public class Chat : EntityBase, IAggregateRoot
 
     public bool IsParticipant(Guid userId)
     {
-        return _participantsUserIds.Contains(userId);
+        return _participants.Any(chatParticipant => chatParticipant.UserId == userId);
     }
 }

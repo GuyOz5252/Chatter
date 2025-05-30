@@ -365,6 +365,8 @@ dotnet_diagnostic.IDE0072.severity = none
 # IDE0290: Use primary constructor
 dotnet_diagnostic.IDE0290.severity = none
 
+dotnet_diagnostic.IDE0032.severity = none
+
 # SonarAnalyzer.CSharp rules
 
 # S112: General or reserved exceptions should never be thrown

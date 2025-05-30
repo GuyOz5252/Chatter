@@ -14,47 +14,32 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .HasKey(user => user.Id);
-        modelBuilder.Entity<User>()
-            .Property(user => user.UserName)
-            .IsRequired();
-        modelBuilder.Entity<User>()
-            .Property(user => user.Email)
-            .IsRequired();
-        modelBuilder.Entity<User>()
-            .Property(user => user.PasswordHash)
-            .IsRequired();
+        modelBuilder.Entity<User>(builder =>
+        {
+            builder.HasKey(e => e.Id);
+            builder.Property(user => user.UserName).IsRequired();
+            builder.Property(user => user.Email).IsRequired();
+            builder.Property(user => user.PasswordHash).IsRequired();
+        });
         
-        modelBuilder.Entity<Chat>()
-            .HasKey(chat => chat.Id);
-        // modelBuilder.Entity<Chat>().Metadata
-        //     .FindNavigation(nameof(Chat.ChatMessages))!
-        //     .SetPropertyAccessMode(PropertyAccessMode.Field);
-        // modelBuilder.Entity<Chat>().Metadata
-        //     .FindNavigation(nameof(Chat.ParticipantsUserIds))!
-        //     .SetPropertyAccessMode(PropertyAccessMode.Field);
-        modelBuilder.Entity<Chat>()
-            .Property<List<Guid>>("_participantsUserIds")
-            .HasConversion(
-                guids => string.Join(",", guids),
-                guids => guids.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(Guid.Parse).ToList())
-            .IsRequired();
-        
-        modelBuilder.Entity<ChatMessage>()
-            .HasKey(chatMessage => chatMessage.Id);
-        modelBuilder.Entity<ChatMessage>()
-            .Property(chatMessage => chatMessage.SenderUserId)
-            .IsRequired();
-        modelBuilder.Entity<ChatMessage>()
-            .Property(chatMessage => chatMessage.MessageContent)
-            .IsRequired();
-        modelBuilder.Entity<ChatMessage>()
-            .Property(chatMessage => chatMessage.SentAt)
-            .IsRequired();
-        modelBuilder.Entity<ChatMessage>()
-            .HasOne<Chat>()
-            .WithMany(nameof(Chat.ChatMessages))
-            .HasForeignKey(chat => chat.Id);
+        modelBuilder.Entity<Chat>(builder =>
+        {
+            builder.HasKey(chat => chat.Id);
+            builder.HasMany<ChatMessage>()
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ChatMessage>(builder =>
+        {
+            builder.HasKey(chatMessage => chatMessage.Id);
+            builder.Property(chatMessage => chatMessage.SenderUserId).IsRequired();
+            builder.Property(chatMessage => chatMessage.MessageContent).IsRequired();
+            builder.Property(chatMessage => chatMessage.SentAt).IsRequired();
+            builder
+                .HasOne<Chat>()
+                .WithMany(nameof(Chat.ChatMessages))
+                .HasForeignKey(chatMessage => chatMessage.Id);
+        });
     }
 }

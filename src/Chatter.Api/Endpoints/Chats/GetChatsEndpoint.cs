@@ -20,7 +20,7 @@ public class GetChatsEndpoint : IEndpoint
                     UserId = userId,
                 };
                 var result = await queryHandler.HandleAsync(getChatsQuery, cancellationToken);
-                result.Match(
+                return result.Match(
                     Results.Ok,
                     error => error.ToProblemDetails());
             })

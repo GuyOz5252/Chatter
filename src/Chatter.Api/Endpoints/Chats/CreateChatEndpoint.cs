@@ -24,7 +24,7 @@ public class CreateChatEndpoint : IEndpoint
                     ParticipantsUserIds = request.ParticipantsUserIds
                 };
                 var result = await commandHandler.HandleAsync(createChatCommand, cancellationToken);
-                result.Match(
+                return result.Match(
                     Results.Ok,
                     error => error.ToProblemDetails());
             })

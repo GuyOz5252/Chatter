@@ -22,8 +22,8 @@ public class ChatRepository : IChatRepository
     public async Task<Result<List<Chat>>> GetChatsByUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Chats
-            .Where(chat => chat.ParticipantsUserIds.Contains(userId))
-            .Include(chat => chat.ParticipantsUserIds)
+            .Where(chat => chat.Participants.Any(chatParticipant => chatParticipant.UserId == userId))
+            .Include(chat => chat.Participants)
             .Include(chat => chat.ChatMessages)
             .ToListAsync(cancellationToken);
     }

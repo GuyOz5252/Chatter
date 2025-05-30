@@ -16,6 +16,14 @@ public class GetChatsQueryHandler : IQueryHandler<GetChatsQuery, List<Chat>>
 
     public async Task<Result<List<Chat>>> HandleAsync(GetChatsQuery query, CancellationToken cancellationToken = default)
     {
-        return await _chatRepository.GetChatsByUserAsync(query.UserId, cancellationToken);
+        var result = await _chatRepository.GetChatsByUserAsync(query.UserId, cancellationToken);
+        if (result.IsSuccess)
+        {
+            return result.Value.Any()
+                ? result
+                : Error.NotFound($"User: {query.UserId} is not in a participant in any chat.");
+        }
+        
+        return result;
     }
 }
