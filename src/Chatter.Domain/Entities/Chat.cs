@@ -10,6 +10,8 @@ public class Chat : EntityBase, IAggregateRoot
     public IReadOnlyCollection<ChatMessage> ChatMessages => _chatMessages;
     public IReadOnlyCollection<Guid> ParticipantsUserIds => _participantsUserIds;
 
+    public Chat() {}
+    
     public Chat(List<Guid> participantsUserIds)
     {
         Id = Guid.NewGuid();

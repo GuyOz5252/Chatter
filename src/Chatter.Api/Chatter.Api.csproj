@@ -16,19 +16,20 @@
         </PackageReference>
         <PackageReference Include="Serilog" />
         <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="Serilog.Sinks.Console" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Chatter.Application\Chatter.Application.csproj" />
       <ProjectReference Include="..\Chatter.Infrastructure\Chatter.Infrastructure.csproj" />
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

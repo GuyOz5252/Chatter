@@ -45,8 +45,16 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-app.UseSwaggerUI(options => options.DocumentTitle = "Chatter API");
+app.UseDeveloperExceptionPage();
+app.UseHttpsRedirection();
+app.UseRouting();
 app.UseExceptionHandler();
 app.MapEndpoints();
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.DocumentTitle = "Chatter API";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Chatter API");
+});
 
 await app.RunAsync();

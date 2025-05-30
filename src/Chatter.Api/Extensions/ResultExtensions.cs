@@ -7,9 +7,9 @@ public static class ResultExtensions
     public static TOutput Match<TOutput>(
         this Result result,
         Func<TOutput> onSuccess,
-        Func<Result, TOutput> onFailure)
+        Func<Error, TOutput> onFailure)
     {
-        return result.IsSuccess ? onSuccess.Invoke() : onFailure.Invoke(result);
+        return result.IsSuccess ? onSuccess.Invoke() : onFailure.Invoke(result.Error);
     }
 
     public static TOutput Match<TInput, TOutput>(

@@ -7,26 +7,26 @@ namespace Chatter.Api.Endpoints.Users;
 
 public class RegisterUserEndpoint : IEndpoint
 {
-    private sealed record Request(string UserName, string Email, string Password);
+    private sealed record RegisterUserRequest(string UserName, string Email, string Password);
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("/users", async (
-            ICommandHandler<RegisterUserCommand, Guid> commandHandler,
-            Request request,
-            CancellationToken cancellationToken) =>
-        {
-            var registerUserCommand = new RegisterUserCommand
+                RegisterUserRequest request,
+                ICommandHandler<RegisterUserCommand, Guid> commandHandler,
+                CancellationToken cancellationToken) =>
             {
-                UserName = request.UserName,
-                Email = request.Email,
-                Password = request.Password
-            };
-            var result = await commandHandler.HandleAsync(registerUserCommand, cancellationToken);
-            return result.Match(
-                Results.Ok,
-                error => error.ToProblemDetails());
-        })
-        .WithTags(Tags.Users);
+                var registerUserCommand = new RegisterUserCommand
+                {
+                    UserName = request.UserName,
+                    Email = request.Email,
+                    Password = request.Password
+                };
+                var result = await commandHandler.HandleAsync(registerUserCommand, cancellationToken);
+                return result.Match(
+                    Results.Ok,
+                    error => error.ToProblemDetails());
+            })
+            .WithTags(Tags.Users);
     }
 }

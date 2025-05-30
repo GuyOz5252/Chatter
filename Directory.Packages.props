@@ -6,6 +6,7 @@
   <ItemGroup>
     <!-- Static code analysis -->
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.5" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.1-dev-00953" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.9.0.115408" />
     <!-- Application -->
     <PackageVersion Include="Scrutor" Version="6.0.1" />

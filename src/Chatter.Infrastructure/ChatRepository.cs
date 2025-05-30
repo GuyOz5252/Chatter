@@ -23,6 +23,8 @@ public class ChatRepository : IChatRepository
     {
         return await _dbContext.Chats
             .Where(chat => chat.ParticipantsUserIds.Contains(userId))
+            .Include(chat => chat.ParticipantsUserIds)
+            .Include(chat => chat.ChatMessages)
             .ToListAsync(cancellationToken);
     }
 
