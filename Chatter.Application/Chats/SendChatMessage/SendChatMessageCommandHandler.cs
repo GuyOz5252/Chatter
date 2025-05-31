@@ -24,13 +24,13 @@ public class SendChatMessageCommandHandler : ICommandHandler<SendChatMessageComm
 
     public async Task<Result> HandleAsync(SendChatMessageCommand command, CancellationToken cancellationToken = default)
     {
-        var chat = await _chatRepository.GetAsync(command.ChatId, cancellationToken);
+        var chat = await _chatRepository.GetFullAsync(command.ChatId, cancellationToken);
         if (chat.IsFailure)
         {
             return chat;
         }
 
-        if (chat.Value.IsParticipant(command.UserId))
+        if (!chat.Value.IsParticipant(command.UserId))
         {
             return Error.Unauthorized("User is not participant in chat.");
         }
@@ -38,6 +38,7 @@ public class SendChatMessageCommandHandler : ICommandHandler<SendChatMessageComm
         var chatMessage = new ChatMessage
         {
             Id = Guid.NewGuid(),
+            ChatId = command.ChatId,
             SenderUserId = command.UserId,
             MessageContent = command.MessageContent,
             SentAt = _dateTimeProvider.UtcNow

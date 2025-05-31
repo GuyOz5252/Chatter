@@ -21,6 +21,7 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
 {
+    optionsBuilder.EnableSensitiveDataLogging();
     optionsBuilder.UseInMemoryDatabase("ChatterDb");
 });
 builder.Services.AddScoped<IUserRepository, UserRepository>();

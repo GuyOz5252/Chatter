@@ -27,6 +27,7 @@ public class ApplicationDbContext : DbContext
             builder.HasKey(chat => chat.Id);
             builder.HasMany<ChatMessage>()
                 .WithOne()
+                .HasForeignKey(chat => chat.ChatId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -36,10 +37,6 @@ public class ApplicationDbContext : DbContext
             builder.Property(chatMessage => chatMessage.SenderUserId).IsRequired();
             builder.Property(chatMessage => chatMessage.MessageContent).IsRequired();
             builder.Property(chatMessage => chatMessage.SentAt).IsRequired();
-            builder
-                .HasOne<Chat>()
-                .WithMany(nameof(Chat.ChatMessages))
-                .HasForeignKey(chatMessage => chatMessage.Id);
         });
     }
 }

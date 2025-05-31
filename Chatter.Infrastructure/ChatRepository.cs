@@ -19,17 +19,32 @@ public class ChatRepository : IChatRepository
         return await _dbContext.Chats.FindAsync([id], cancellationToken);
     }
 
+    public async Task<Result<Chat>> GetFullAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Chats
+            .Include(chat => chat.Participants)
+            .Include(chat => chat.ChatMessages)
+            .FirstOrDefaultAsync(chat => chat.Id == id, cancellationToken: cancellationToken);
+    }
+
     public async Task<Result<List<Chat>>> GetChatsByUserAsync(
         Guid userId,
         CancellationToken cancellationToken = default)
     {
         return await _dbContext.Chats
             .Where(chat => chat.Participants.Any(chatParticipant => chatParticipant.UserId == userId))
+            .Include(chat => chat.Participants)
+            .Include(chat => chat.ChatMessages)
             .ToListAsync(cancellationToken);
     }
 
     public void Create(Chat chat)
     {
         _dbContext.Chats.Add(chat);
+    }
+
+    public void Update(Chat chat)
+    {
+        _dbContext.Chats.Update(chat);
     }
 }
