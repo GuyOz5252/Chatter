@@ -3,4 +3,4 @@
     image: chatter.api
     build:
       context: .
-      dockerfile: src/Chatter.Api/Dockerfile
+      dockerfile: Chatter.Api/Dockerfile
