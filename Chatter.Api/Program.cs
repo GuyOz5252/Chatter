@@ -22,7 +22,9 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 builder.Services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
 {
     optionsBuilder.EnableSensitiveDataLogging();
-    optionsBuilder.UseInMemoryDatabase("ChatterDb");
+    // optionsBuilder.UseInMemoryDatabase("ChatterDb");
+    optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("ChatterDb"),
+        npgsqlDbContextOptionsBuilder => npgsqlDbContextOptionsBuilder.MigrationsAssembly("Chatter.Api"));
 });
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
@@ -46,7 +48,14 @@ builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
-app.UseDeveloperExceptionPage();
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    
+    using var scope = app.Services.CreateScope();
+    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseExceptionHandler();
