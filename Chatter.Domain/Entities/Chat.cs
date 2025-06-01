@@ -4,8 +4,8 @@ namespace Chatter.Domain.Entities;
 
 public class Chat : EntityBase, IAggregateRoot
 {
-    private readonly List<ChatMessage> _chatMessages;
-    private readonly List<ChatParticipant> _participants;
+    private readonly List<ChatMessage> _chatMessages = [];
+    private readonly List<ChatParticipant> _participants = [];
     
     public List<ChatMessage> ChatMessages => _chatMessages;
     public List<ChatParticipant> Participants => _participants;

@@ -25,10 +25,21 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Chat>(builder =>
         {
             builder.HasKey(chat => chat.Id);
-            builder.HasMany<ChatMessage>()
+            builder.HasMany(chat => chat.Participants)
                 .WithOne()
-                .HasForeignKey(chat => chat.ChatId)
+                .HasForeignKey(chatParticipant => chatParticipant.ChatId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(chat => chat.ChatMessages)
+                .WithOne()
+                .HasForeignKey(chatMessage => chatMessage.ChatId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ChatParticipant>(builder =>
+        {
+            builder.HasKey(chatParticipant => chatParticipant.Id);
+            builder.Property(chatParticipant => chatParticipant.UserId).IsRequired();
+            builder.Property(chatParticipant => chatParticipant.ChatId).IsRequired();
         });
 
         modelBuilder.Entity<ChatMessage>(builder =>
@@ -37,6 +48,10 @@ public class ApplicationDbContext : DbContext
             builder.Property(chatMessage => chatMessage.SenderUserId).IsRequired();
             builder.Property(chatMessage => chatMessage.MessageContent).IsRequired();
             builder.Property(chatMessage => chatMessage.SentAt).IsRequired();
+            // builder.HasOne(chatMessage => chatMessage.Chat)
+            //     .WithMany(chat => chat.ChatMessages)
+            //     .HasForeignKey(m => m.ChatId)
+            //     .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

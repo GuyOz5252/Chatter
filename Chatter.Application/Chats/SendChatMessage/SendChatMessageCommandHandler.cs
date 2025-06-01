@@ -37,7 +37,6 @@ public class SendChatMessageCommandHandler : ICommandHandler<SendChatMessageComm
 
         var chatMessage = new ChatMessage
         {
-            Id = Guid.NewGuid(),
             ChatId = command.ChatId,
             SenderUserId = command.UserId,
             MessageContent = command.MessageContent,
